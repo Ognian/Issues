@@ -1,0 +1,7 @@
+# for Webstorm
+.idea/workspace.xml
+.idea/tasks.xml
+
+# for node.js since you would do a npm install after restoring to a blank dir
+node_modules/*
+

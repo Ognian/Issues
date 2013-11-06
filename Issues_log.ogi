@@ -1,0 +1,144 @@
+create package.json with content {}
+
+npm install github-api --save
+
+
+OK tried github-api --> newest version not with npm -> ok downloaded from github
+--> BAD doesn't support pagination with issues and issues do not include comments....
+ --> comments need to be fetched separate...
+
+
+Trying
+https://github.com/mikedeboer/node-github
+==========================================
+
+ npm install github --save
+
+This is much better...
+
+// see http://mikedeboer.github.io/node-github/#issues.prototype.getAll issues
+// and
+// http://developer.github.com/v3/issues/#list-issues-for-a-repository
+
+this gets all Issues
+
+//github.issues.getAll(
+//    {
+////        filter: "created",
+//        filter: "all",
+////        state: "open",
+////        labels: "",
+////        sort: "updated",
+////        direction: "asc"
+//        per_page: 1
+//    },
+//    function (err, res) {
+//        //res is an array containing the issues but also has a meta field...
+//
+//        function getMore(r){
+//            if(github.hasNextPage(r)){
+//                github.getNextPage(r, function (err, res) {
+//                    doWithIssues(res);
+//                    getMore(res);
+//                });
+//            };
+//        };
+//
+//        doWithIssues(res);
+//        getMore(res); //if there are a lot of pages recursion may get quite deep
+//
+//
+//
+//    }
+//);
+
+
+
+repoIssues same for only one repo...
+
+
+There are issues and comments
+we shall dump them in different files
+TODO How are both linked???
+
+
+
+------------------------------
+
+How to publish to npm as a dev
+https://gist.github.com/coolaj86/1318304
+
+and
+
+http://stackoverflow.com/questions/13507763/do-i-need-to-publish-to-npm-every-time-i-update-a-package-available-via-git
+
+
+28.10.2013 ogi
+
+//github.issues.repoComments(
+//    {
+//        repo: "test",
+//        user: "Ognian",
+////        sort: "updated",
+////        direction: "asc"
+//        per_page: 1 //TODO change to 100
+//    },
+//    function (err, res) {
+//        //res is an array containing the issues but also has a meta field...
+//
+//        function doWithComments(commentArray) {
+//            console.log("a comment:" + JSON.stringify(commentArray, undefined, 2));
+//        }
+//
+//        function getMoreC(r) {
+//            if (github.hasNextPage(r)) {
+//                github.getNextPage(r, function (err, res) {
+//                    doWithComments(res);
+//                    getMoreC(res);
+//                });
+//            }
+//
+//        }
+//
+//        doWithComments(res);
+//        getMoreC(res); //if there are a lot of pages recursion may get quite deep
+//
+//
+//    }
+//);
+
+works good but we need the comments inside the Issues...
+
+29.10.2013 ogi
+
+http://sgmonda.github.io/stdio/
+could be used for cmd line ....
+
+30.10.2013 ogi
+
+print to pdf and open in preview works with:
+Safari
+the very latest chrome canaray (DOWNLOADED TODAY)
+;-)
+
+
+    /*@page {*/
+    /*@top-center {*/
+    /*content: element(pageHeader);*/
+    /*}*/
+    /*}*/
+    /*#pageHeader{*/
+    /*position: running(pageHeader);*/
+    /*}*/
+
+
+31.10.2013 ogi
+
+installed prince looks like the only one supporting css paged media yet (next will be webkit)
+see http://www.princexml.com/doc/9.0/#paged
+ prince http://localhost:63342/Issues/public/printtest.html -o printtest.pdf
+OK!
+
+npm install stdio --save
+
+6.11.2013 ogi

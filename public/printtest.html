@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<style type="text/css">
+    #pageHeader {
+        display: none;
+    }
+
+    #pageFooter {
+        display: none;
+    }
+
+    @media print {
+        @page {
+            size: auto;   /* auto is the initial value */
+            margin: 1cm;  /* this affects the margin in the printer settings; by this we remove standard headers and footers (Chrome an Opera only!!) In Safari user must do that...*/
+            /*padding: 1cm;*/
+            counter-increment: page;
+            counter-reset: page 1;
+            @top-left {
+                content: "Logo hier";
+            };
+
+            /*@top-right {*/
+            /*content: env(url);*/
+            /*}*/
+            /*@bottom-left {*/
+            /*content: env(date-time);*/
+            /*}*/
+            @bottom-right {
+                /*content: env(date-time) " Seite " counter(page);*/
+                content: "Seite " counter(page) " von " counter(pages);
+            };
+
+            @top-center {
+                content: element(pageHeader);
+            };
+
+        }
+
+        h2 {
+            page-break-before: always;
+        }
+
+        @page:first h2{
+            page-break-before: avoid;
+        }
+
+        body {
+            background-color: #FFFFFF;
+            border: solid 1px red;
+            /*margin: 1cm; *//* this affects the margin on the content before sending to printer */
+        }
+
+    }
+
+
+</style>
+
+
+<head>
+    <title>print page test</title>
+</head>
+
+
+<body>
+
+<div id="pageHeader">
+    Header Line
+</div>
+
+<div id="pageFooter">
+    Footer Line
+</div>
+
+<h1>Überschrift</h1>
+
+<h2>Die erste Seite</h2>
+
+<p>und ihr Text</p>
+
+<h2>Und die zweite Seite</h2>
+
+<p>und ihr Text</p>
+
+</body>
+</html>

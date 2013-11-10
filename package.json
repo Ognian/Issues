@@ -1,5 +1,16 @@
 {
-  "dependencies": {
+    "name": "getGHIssues",
+    "version": "0.0.1",
+    "private": false,
+    "author": {
+        "name": "Ognian Tschakalov",
+        "email": "ognian.tschakalov@ogi-it.com"
+    },
+    "scripts": {
+        "start": "node getGHIssues"
+    },
+
+    "dependencies": {
     "github": "~0.1.12",
     "stdio": "~0.1.2"
   }

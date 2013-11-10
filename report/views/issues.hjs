@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<style type="text/css">
+    @media print {
+        @page {
+            size: auto;   /* auto is the initial value */
+            margin: 1cm;  /* this affects the margin in the printer settings; by this we remove standard headers and footers (Chrome an Opera only!!) In Safari user must do that...*/
+            /*padding: 1cm;*/
+            counter-increment: page;
+            counter-reset: page 1;
+            @top-left {
+                content: "Logo hier";
+            };
+
+            /*@top-right {*/
+            /*content: env(url);*/
+            /*}*/
+            /*@bottom-left {*/
+            /*content: env(date-time);*/
+            /*}*/
+            @bottom-right {
+                /*content: env(date-time) " Seite " counter(page);*/
+                content: "Seite " counter(page) " von " counter(pages);
+            };
+
+            @top-center {
+                content: element(pageHeader);
+            };
+
+        }
+
+        h2 {
+            page-break-before: always;
+        }
+
+        @page:first h2{
+                        page-break-before: avoid;
+                    }
+
+        /*body {*/
+            /*background-color: #FFFFFF;*/
+            /*border: solid 1px red;*/
+            /*margin: 1cm; *//**//* this affects the margin on the content before sending to printer */
+        /*}*/
+
+    }
+
+</style>
+
+
+
+<head>
+    <title>github issues reporter</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+<h1>Issues in {{ name }}</h1>
+
+<!--<ul>-->
+    <!--{{#files}}-->
+    <!--<li><a href="./issues/{{.}}">{{.}}</a></li>-->
+    <!--{{/files}}-->
+<!--</ul>-->
+
+</body>
+</html>

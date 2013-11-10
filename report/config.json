@@ -1,0 +1,4 @@
+{
+    "//":" default path to look for json data files",
+    "path":"../data"
+}

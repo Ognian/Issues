@@ -8,15 +8,24 @@
 
 var GitHubApi = require("github");
 var fs = require('fs');
+var path = require('path');
 
 var stdio = require('stdio');
 
 var options = stdio.getopt({
     'authUser': {key: 'a', description: 'authenticate as user with password (eg. -a user1 pwd1)', mandatory: true, args: 2},
-    'repo': {key: 'r', description: 'repository in the form username repository name (eg. -a user1 repo2)', mandatory: true, args: 2}
+    'repo': {key: 'r', description: 'repository in the form username repository name (eg. -a user1 repo2)', mandatory: true, args: 2},
+    'outputPath': {key: 'o', description: 'output Path (default ./data)', args: 1}
 });
 
-console.log(JSON.stringify(options, undefined, 2));
+if (!options.outputPath) {
+    options.outputPath = "./data";
+};
+if(!fs.existsSync(options.outputPath)){
+    fs.mkdirSync(options.outputPath);
+};
+
+//console.log(JSON.stringify(options, undefined, 2));
 
 var github = new GitHubApi({
     // required
@@ -150,6 +159,7 @@ var filename = "Issues_" + issuesUser + "_" + issuesRepo + "_" + new Date().toIS
     replace(/\..+/, '').     // delete the dot and everything after;
     replace(/:/g, '_')      // replace : with an underscore g-> all
     + ".json";
+filename=path.join(options.outputPath, filename );
 
 // time is UTC !! that is good!
 

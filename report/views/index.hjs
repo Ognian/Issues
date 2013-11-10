@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ title }}</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>Files in {{ dir }}</h1>
+
+    <ul>
+    {{#files}}
+    <li><a href="./issues/{{.}}">{{.}}</a></li>
+    {{/files}}
+    </ul>
+
+  <p>Choose a .json file from the above to display or refresh page...</p>
+  </body>
+</html>

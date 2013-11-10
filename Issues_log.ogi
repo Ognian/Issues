@@ -142,3 +142,33 @@ OK!
 npm install stdio --save
 
 6.11.2013 ogi
+
+ npm install express --save
+
+node_modules/express/bin/express -H report
+generates the report app
+
+npm rm express
+
+cd report
+npm install
+
+OK
+
+spec:
+http://mustache.github.io/mustache.5.html
+
+
+http://stackoverflow.com/questions/16586705/configuring-v8s-memory-management-to-be-smart-for-a-node-js-process
+
+7.11.2013 ogi
+
+sudo npm install doxx -g
+
+OK
+doxx --source report -i node_modules,views --target report_docs
+
+TODO --> make separate template
+TODO --> run for root dir...
+
+10.11.2013 ogi

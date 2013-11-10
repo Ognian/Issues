@@ -171,4 +171,31 @@ doxx --source report -i node_modules,views --target report_docs
 TODO --> make separate template
 TODO --> run for root dir...
 
+LETS TRY DUST.JS now
+npm install dustjs-linkedin  --save
+npm http GET https://registry.npmjs.org/dustjs-linkedin
+npm http 304 https://registry.npmjs.org/dustjs-linkedin
+npm http GET https://registry.npmjs.org/dustjs-linkedin/-/dustjs-linkedin-2.2.0.tgz
+npm http 200 https://registry.npmjs.org/dustjs-linkedin/-/dustjs-linkedin-2.2.0.tgz
+npm ERR! Error: shasum check failed for /var/folders/p6/vn3fc5rx21n9hh3h_f3b6b380000gn/T/npm-35433-xc6Dg9KB/1384100229356-0.31653884798288345/tmp.tgz
+npm ERR! Expected: a459d763e187840ac49f6a10303b9993c71e361f
+npm ERR! Actual:   16fc61261150113bbc8202bb95dfa8e716a296dd
+
+npm cache clean
+npm install dustjs-linkedin  --save
+--> OK!!
+ npm install dustjs-helpers  --save
+
+OK
+so since the official dustjs repo is dustjs-linkedin
+they point to the express demo
+https://github.com/chovy/express-template-demo
+
+so the link between dust amd express is for now via consolidate
+https://github.com/visionmedia/consolidate.js/
+
+
+ npm rm hjs  --save
+ WOW this works...
+
 10.11.2013 ogi

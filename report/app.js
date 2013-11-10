@@ -15,12 +15,21 @@ var issues = require('./routes/issues');
 var http = require('http');
 var path = require('path');
 
+var dust_h = require('dustjs-helpers'); //this is needed!! there is a try load in consolidate...
+var dust = require('dustjs-linkedin');
+
+var cons = require('consolidate');
+
+
 var app = express();
 
 // all environments
 app.set('port', process.env.PORT || 3001);
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hjs');
+
+app.engine('dust', cons.dust);
+app.set('view engine', 'dust');
+
 app.use(express.favicon()); //TODO change to custom one
 app.use(express.logger('dev'));
 app.use(express.json());

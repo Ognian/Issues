@@ -35,14 +35,16 @@
             page-break-before: always;
         }
 
-        @page:first h2{
-                        page-break-before: avoid;
-                    }
+        @page :first
+
+        h2 {
+            page-break-before: avoid;
+        }
 
         /*body {*/
-            /*background-color: #FFFFFF;*/
-            /*border: solid 1px red;*/
-            /*margin: 1cm; *//**//* this affects the margin on the content before sending to printer */
+        /*background-color: #FFFFFF;*/
+        /*border: solid 1px red;*/
+        /*margin: 1cm; *//**//* this affects the margin on the content before sending to printer */
         /*}*/
 
     }
@@ -50,19 +52,30 @@
 </style>
 
 
-
 <head>
     <title>github issues reporter</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
 </head>
 <body>
-<h1>Issues in {{ name }}</h1>
+<h1>Issues in {name}</h1>
 
-<!--<ul>-->
-    <!--{{#files}}-->
-    <!--<li><a href="./issues/{{.}}">{{.}}</a></li>-->
-    <!--{{/files}}-->
-<!--</ul>-->
+
+{#allDocs}
+<h2 style="clear:both">{title} (id:{id})</h2>
+
+<div style="float:left"><img src={user.avatar_url} style="width:60px;height: 60px"><br>{user.login}</div>
+<div>
+<p>state: {state} created_at: {created_at} updated_at: {updated_at} closed_at: {closed_at}</p>
+<p style="font-size:large">{body}</p>
+
+    {#ogi_allComments}
+    <div style="clear:both;float:left"><img src={user.avatar_url} style="width:60px;height: 60px"><br>{user.login}</div>
+    <p>state: {state} created_at: {created_at} updated_at: {updated_at}</p>
+    <p style="font-size:large">{body}</p>
+    {/ogi_allComments}
+</div>
+
+{/allDocs}
 
 </body>
 </html>

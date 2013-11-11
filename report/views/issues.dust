@@ -63,13 +63,20 @@
 {#allDocs}
 <h2 style="clear:both">{title} (id:{id})</h2>
 
-<div style="float:left"><img src={user.avatar_url} style="width:60px;height: 60px"><br>{user.login}</div>
+<div style="float:left">
+    <!--<img src={user.avatar_url} style="width:60px;height: 60px"><br>-->
+    {user.login}
+</div>
 <div>
 <p>state: {state} created_at: {created_at} updated_at: {updated_at} closed_at: {closed_at}</p>
 <p style="font-size:large">{body}</p>
 
     {#ogi_allComments}
-    <div style="clear:both;float:left"><img src={user.avatar_url} style="width:60px;height: 60px"><br>{user.login}</div>
+    <p>Comment:</p>
+    <div style="clear:both;float:left">
+        <!--<img src={user.avatar_url} style="width:60px;height: 60px"><br>-->
+        {user.login}
+    </div>
     <p>state: {state} created_at: {created_at} updated_at: {updated_at}</p>
     <p style="font-size:large">{body}</p>
     {/ogi_allComments}

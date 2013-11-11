@@ -199,3 +199,47 @@ https://github.com/visionmedia/consolidate.js/
  WOW this works...
 
 10.11.2013 ogi
+
+try to get many issues:
+joyent / node
+
+node getGHIssues.js -a Ognian xxxx -r joyent node
+
+we got some:
+ERROR {"message":"API rate limit exceeded for Ognian.","documentation_url":"http://developer.github.com/v3/#rate-limiting"}
+
+and reendering the gravatar is also a bad idea... --> removed
+
+OK let's see how many issues we are able to download before hitting the API rate limit...
+The only thing we can do if this is too low is to contact github...
+
+looks like there have been 6305 issues in joyent/node
+and I got 5807 pages not issues -->
+I've got 106 errors hitting api rate limit
+preview app can render only 3327 pages...
+
+This is also interesting:
+GET /issues/Issues_Ognian_test_2013-11-07_15_03_11.json 200 31ms - 4.85kb
+GET /stylesheets/style.css 304 0ms
+GET / 200 14ms - 586b
+GET /stylesheets/style.css 304 1ms
+GET /issues/Issues_joyent_node_2013-11-11_10_26_01.json 200 2343ms - 20.63mb
+GET /stylesheets/style.css 304 3ms
+GET /issues/Issues_joyent_node_2013-11-11_10_26_01.json 200 2128ms - 20.81mb
+GET /issues/Issues_Ognian_test_2013-11-07_15_03_11.json 200 55ms - 4.91kb
+GET /stylesheets/style.css 304 2ms
+GET / 200 11ms - 586b
+
+This means that the 5k pages are in the browser actually 20.81mb
+and the file size of the json is 50mb
+this means don't worry about async rendering, we are far far away from nodejs or other memory limits the bottleneck is THE BROWSER
+
+
+lets try prince...
+prince http://localhost:3001/issues/Issues_joyent_node_2013-11-11_10_26_01.json -o joyent_node.pdf
+
+joyent_node.pdf -> 20,9MB
+10.381 pages ... (due to font bigger size)
+and indeed everything is rendered!! (with header and footer!!!)
+
+11.11.2013 ogi

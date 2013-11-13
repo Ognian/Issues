@@ -258,6 +258,22 @@ see
  http://sugarjs.com/dates
  http://sugarjs.com/date_formats
 
-it doesn't provide a npm version and actually delegetas everything to sugar.js so maybe we should just use sugar for that...
+it doesn't provide a npm version and actually delegets everything to sugar.js so maybe we should just use sugar for that...
+
+... TODO
+
+see
+http://zavoo.com/?p=356
+this shows how to add markdown...
+
+
+looks like this one
+npm install markdown --save
+
+is not so good and does not have github flavored markdown...
+
+this looks better:
+https://github.com/chjj/marked
+npm install marked --save
 
 13.11.2013 ogi

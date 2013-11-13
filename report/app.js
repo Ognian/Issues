@@ -34,7 +34,16 @@ dust.helpers.formatDate = function (chunk, context, bodies, params) {
 
     return chunk.write(date + '.' + month + '.' + year);
 };
+var marked = require('marked');
 
+dust.helpers.markdown = function(chunk, context, bodies, params) {
+    if (bodies.block) {
+        return chunk.capture(bodies.block, context, function(string, chunk) {
+            chunk.end(marked(string));
+        });
+    }
+    return chunk;
+};
 
 var cons = require('consolidate');
 

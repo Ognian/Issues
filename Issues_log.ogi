@@ -11,6 +11,7 @@ OK tried github-api --> newest version not with npm -> ok downloaded from github
 Trying
 https://github.com/mikedeboer/node-github
 ==========================================
+(from ajax.org -> cloud9 ide)
 
  npm install github --save
 
@@ -171,7 +172,7 @@ doxx --source report -i node_modules,views --target report_docs
 TODO --> make separate template
 TODO --> run for root dir...
 
-LETS TRY DUST.JS now
+LETS TRY DUST.JS now (switching from hogan.js hjs (twitter) to dustjs (linkedin))
 npm install dustjs-linkedin  --save
 npm http GET https://registry.npmjs.org/dustjs-linkedin
 npm http 304 https://registry.npmjs.org/dustjs-linkedin
@@ -214,7 +215,7 @@ OK let's see how many issues we are able to download before hitting the API rate
 The only thing we can do if this is too low is to contact github...
 
 looks like there have been 6305 issues in joyent/node
-and I got 5807 pages not issues -->
+and I got 5807 pages not issues --> 0..4949 ==> 4950 issues !!!
 I've got 106 errors hitting api rate limit
 preview app can render only 3327 pages...
 
@@ -242,4 +243,21 @@ joyent_node.pdf -> 20,9MB
 10.381 pages ... (due to font bigger size)
 and indeed everything is rendered!! (with header and footer!!!)
 
+for more dust helpers see:
+http://linkedin.github.io/dustjs/test/test.html?q=helpers
+and select the different templates...
+@sep is a nice one... can help transform json the way it comes from mongodb to the correct json as array....
+
 11.11.2013 ogi
+
+formatting dates in dustjs:
+im using my own helper now, but this could be better:
+
+https://github.com/ElliotChong/dustjs-date-helpers
+see
+ http://sugarjs.com/dates
+ http://sugarjs.com/date_formats
+
+it doesn't provide a npm version and actually delegetas everything to sugar.js so maybe we should just use sugar for that...
+
+13.11.2013 ogi

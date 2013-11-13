@@ -18,6 +18,24 @@ var path = require('path');
 var dust_h = require('dustjs-helpers'); //this is needed!! there is a try load in consolidate...
 var dust = require('dustjs-linkedin');
 
+
+// add my format helper usage: <p>Today: {@formatDate value="{today}"/}</p>
+dust.helpers.formatDate = function (chunk, context, bodies, params) {
+    var value = dust.helpers.tap(params.value, chunk, context),
+        timestamp,
+        month,
+        date,
+        year;
+//TODO add a better date formating (something like )
+    timestamp = new Date(value);
+    month = timestamp.getMonth() + 1;
+    date = timestamp.getDate();
+    year = timestamp.getFullYear();
+
+    return chunk.write(date + '.' + month + '.' + year);
+};
+
+
 var cons = require('consolidate');
 
 

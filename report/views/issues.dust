@@ -49,6 +49,19 @@
 
     }
 
+    /* media independent css*/
+    .issueCol1 {
+        width: 15em;
+    }
+
+    .commentCol1 {
+        width: 15em;
+    }
+
+    .infodata {
+
+    }
+
 </style>
 
 
@@ -59,30 +72,54 @@
 <body>
 <h1>Issues in {name}</h1>
 
-
 {#allDocs}
-<h2 style="clear:both">{title} (id:{id})</h2>
+<!-- for more helpers see http://linkedin.github.io/dustjs/test/test.html?q=helpers and select a template-->
+<!--<h2>{title} (id:{id} json file line: {@idx}{.} {@math key="{$idx}" method="add" operand="1"/}{/idx} of total in file: {@size key=allDocs}{body}{/size} )</h2>-->
+<!--one based counting-->
+<h2>{title} (id:{id} item line: {@idx} {@math key="{$idx}" method="add" operand="1"/}{/idx} of {@size key=allDocs}{body}{/size} )</h2>
 
-<div style="float:left">
-    <!--<img src={user.avatar_url} style="width:60px;height: 60px"><br>-->
-    {user.login}
-</div>
-<div>
-<p>state: {state} created_at: {created_at} updated_at: {updated_at} closed_at: {closed_at}</p>
-<p style="font-size:large">{body}</p>
+<table>
+    <tr>
+        <td class="issueCol1">
+            <!--<img src={user.avatar_url} style="width:60px;height: 60px"><br>-->
+            <p class="infodata">
+                <b>{user.login}</b><br>
+                state: <b>{state}</b><br>
+                created_at: <b>{@formatDate value="{created_at}"/}</b><br>
+                updated_at: <b>{@formatDate value="{updated_at}"/}</b>
+                {#closed_at}<br>closed_at: <b>{@formatDate value="{closed_at}"/}</b>{/closed_at}
+            </p>
+        </td>
+        <td>
+            <p style="font-size:large">{body}</p>
 
-    {#ogi_allComments}
-    <p>Comment:</p>
-    <div style="clear:both;float:left">
-        <!--<img src={user.avatar_url} style="width:60px;height: 60px"><br>-->
-        {user.login}
-    </div>
-    <p>state: {state} created_at: {created_at} updated_at: {updated_at}</p>
-    <p style="font-size:large">{body}</p>
-    {/ogi_allComments}
-</div>
+            <table>
+                {#ogi_allComments}
+                <tr>
+
+                    <td class="commentCol1">
+                        <!--<img src={user.avatar_url} style="width:60px;height: 60px"><br>-->
+                        <p class="infodata">
+                            <b>{user.login}</b><br>
+                            state: <b>{state}</b><br>
+                            created_at: <b>{@formatDate value="{created_at}"/}</b><br>
+                            updated_at: <b>{@formatDate value="{updated_at}"/}</b>
+                            {#closed_at}<br>closed_at: <b>{@formatDate value="{closed_at}"/}</b>{/closed_at}
+                        </p>
+                    </td>
+                    <td>
+                        <p style="font-size:large">{body}</p>
+
+                    </td>
+                </tr>
+                {/ogi_allComments}
+            </table>
+        </td>
+    </tr>
+</table>
 
 {/allDocs}
+
 
 </body>
 </html>

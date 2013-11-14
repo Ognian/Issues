@@ -91,8 +91,8 @@
             </p>
         </td>
         <td>
-            <!--<p style="font-size:large">{body}</p>-->
-            <div>{@markdown}{body}{/markdown}</div>
+            <p style="font-size:large">{body}</p>
+            <!--<div>{@markdown}{body}{/markdown}</div>-->
 
             <table>
                 {#ogi_allComments}
@@ -110,7 +110,7 @@
                     </td>
                     <td>
                         <!--<p style="font-size:large">{body}</p>-->
-                        <div>{@markdown}{body}{/markdown}</div>
+                        <!--<div>{@markdown}{body}{/markdown}</div>-->
 
                     </td>
                 </tr>

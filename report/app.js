@@ -39,7 +39,10 @@ var marked = require('marked');
 dust.helpers.markdown = function(chunk, context, bodies, params) {
     if (bodies.block) {
         return chunk.capture(bodies.block, context, function(string, chunk) {
+            //console.log('.');
+            //try{
             chunk.end(marked(string));
+            //} catch (err){console.log("marked error: "+err);}
         });
     }
     return chunk;

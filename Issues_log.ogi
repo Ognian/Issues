@@ -276,4 +276,6 @@ this looks better:
 https://github.com/chjj/marked
 npm install marked --save
 
+
+prince http://localhost:3001/issues/Issues_joyent_node_2013-11-11_10_26_01.json -o joyent_node_marked.pdf
 13.11.2013 ogi

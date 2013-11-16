@@ -542,4 +542,14 @@ so this is BIG BIG SHITTTTTTT
                         <!--<div>{@markdown}{body}{/markdown}</div>-->
 use ONLY ONE LINE !!!!!!!!!!!
 
+
+OK this works great !!!!
+https://github.com/chjj/marked/issues/160
+by this separating lexer and parser
+
+still parser has an endless loop!!!
+
+OK I found the string causing an endless loop in the browser...
+marked produces acurater results for gfm (github flavoured markdown...) so lets leave this inside...
+
 15.11.2013 ogi

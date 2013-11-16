@@ -46,8 +46,8 @@ marked.setOptions({
 //        });
 //    },
     tables: true,
-    breaks: false,
-    pedantic: true,
+    breaks: true,
+    pedantic: false,
     sanitize: true,
     smartLists: true,
     smartypants: false,
@@ -60,31 +60,62 @@ dust.helpers.marked = function (chunk, context, bodies, params) {
             //console.log('.');
 
 // var. 1 sync
-//            var str;
-//            try {
-//                //console.log("STRING");
-//                //console.log(string);
-//                str = marked(string);
-//                t_chunk.end(str);
-//                //console.log("STR");
-//                //console.log(str);
+            var str;
+            try {
+                //console.log("STRING");
+                //console.log(string);
+                //str = marked(string);
+                //console.log('l');
+
+//                // Let marked do its normal token generation.
+//                tokens = marked.lexer( content );
 //
-//            } catch (err) {
-//                str = "MARKED ERROR START:" + err + "MARKED ERROR END."
-//                console.log(str);
-//                t_chunk.end(str);
-//            }
+//// Mark all code blocks as already being escaped.
+//// This prevents the parser from encoding anything inside code blocks
+//                tokens.forEach(function( token ) {
+//                    if ( token.type === "code" ) {
+//                        token.escaped = true;
+//                    }
+//                });
+//
+//// Let marked do its normal parsing, but without encoding the code blocks
+//                parsed = marked.parser( tokens );
+//
+
+
+
+                var tokens=marked.Lexer.lex(string, marked.options);
+                //console.log('p');
+                tokens.forEach(function( token ) {
+                    if ( token.type === "code" ) {
+                        token.escaped = true;
+                    }
+
+                });
+
+                //console.log("TOK->"+JSON.stringify(tokens)); //this works great to find failing marked parser infinite loop!!!!
+                str = marked.Parser.parse(tokens, marked.options); //this one goes into an endless loop....!!!
+
+                t_chunk.end(str);
+                //console.log("STR");
+                //console.log(str);
+
+            } catch (err) {
+                str = "MARKED ERROR START:" + err + "MARKED ERROR END."
+                console.log(str);
+                t_chunk.end(str);
+            }
 
 // var. 2 async
-                marked(string, function (err, content) {
-                    if (err) {
-                    console.log("marked async ERROR: "+err);
-                    }
-//                    console.log("CONTEND");
-//                    console.log(content);
-                    //jgfsdlgflas //errors here are ignored!!!! thats the problem !!!!
-                    t_chunk.end(content);
-                });
+//                marked(string, function (err, content) {
+//                    if (err) {
+//                    console.log("marked async ERROR: "+err);
+//                    }
+////                    console.log("CONTEND");
+////                    console.log(content);
+//                    //jgfsdlgflas //errors here are ignored!!!! thats the problem !!!!
+//                    t_chunk.end(content);
+//                });
 
 
         });

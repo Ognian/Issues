@@ -4,7 +4,7 @@ var path = require('path');
 var util = require('util');
 
 var dust = require('dustjs-linkedin');
-dust.isDebug=true;
+//dust.isDebug=true;
 
 /*
  * GET issues listing.
@@ -61,34 +61,32 @@ exports.report = function (req, res) {
     });//tmpl name, context
 
 // var. 1 this is the simplest piping way to do it
-//    dstr.pipe(res);
+    dstr.pipe(res);
 
 // var. 2 this is more complicated but I have grater control i.e. progress output...
-    dstr.on('data', function (chunk) {
-        if (chunk) {
-//           process.nextTick(function () {
-                //console.log('#');
-                count++;
-                if (count % 1000 == 0) {
-                    console.log(count);
-                    console.log(util.inspect(process.memoryUsage()));
-                }
-                var result = res.write(chunk);  //this is a node function!! (also end etc...)
-                if (!result) {
-                    //dstr.pause(); // dust stream has no pause...
-                    //console.log("Problem flushing buffer to kernel: result: " + result);
-                }
-//            }.bind(this));
-        }
-    });
-    dstr.on('end', function () {
-        console.log('END');
-        res.end();
-    });
-    dstr.on('error', function (err) {
-        res.write("ERRORORORORORORORO " + err);
-        res.end();
-    });
+//    dstr.on('data', function (chunk) {
+//        if (chunk) {
+//                //console.log('#');
+//                count++;
+//                if (count % 1000 == 0) {
+//                    console.log(count);
+//                    console.log(util.inspect(process.memoryUsage()));
+//                }
+//                var result = res.write(chunk);  //this is a node function!! (also end etc...)
+//                if (!result) {
+//                    //dstr.pause(); // dust stream has no pause...
+//                    //console.log("Problem flushing buffer to kernel: result: " + result); //actually this is not a problem...
+//                }
+//        }
+//    });
+//    dstr.on('end', function () {
+//        console.log('END');
+//        res.end();
+//    });
+//    dstr.on('error', function (err) {
+//        res.write("ERRORORORORORORORO " + err);
+//        res.end();
+//    });
 
 //    res.on('drain', function() {
 //        // Resume the read stream when the write stream gets hungry

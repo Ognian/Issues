@@ -534,4 +534,12 @@ OK the pump pattern:
 http://elegantcode.com/2011/04/06/taking-baby-steps-with-node-js-pumping-data-between-streams/
 
 
+
+NEVER EVER COMMENT DUST MARKUP OUT !!!!!!!!!!!!!!!!!!!!!!!!! IT IS STILLLLLLLLLLLLLLL COMPILED !!!!!!!!!!!!!!!!!!!!!!!!!
+so this is BIG BIG SHITTTTTTT
+                        <p style="font-size:large">{body}</p>
+                        <!--<div>{@marked}{body}{/marked}</div>-->
+                        <!--<div>{@markdown}{body}{/markdown}</div>-->
+use ONLY ONE LINE !!!!!!!!!!!
+
 15.11.2013 ogi

@@ -77,6 +77,8 @@
 <!--<h2>{title} (id:{id} json file line: {@idx}{.} {@math key="{$idx}" method="add" operand="1"/}{/idx} of total in file: {@size key=allDocs}{body}{/size} )</h2>-->
 <!--one based counting-->
 <h2>{title} (id:{id} item line: {@idx} {@math key="{$idx}" method="add" operand="1"/}{/idx} of {@size key=allDocs}{body}{/size} )</h2>
+<!--never ever brake previous line into two lines...-->
+
 
 <table>
     <tr>
@@ -92,7 +94,9 @@
         </td>
         <td>
             <p style="font-size:large">{body}</p>
+            <!--<div>{@marked}{body}{/marked}</div>-->
             <!--<div>{@markdown}{body}{/markdown}</div>-->
+
 
             <table>
                 {#ogi_allComments}
@@ -109,7 +113,8 @@
                         </p>
                     </td>
                     <td>
-                        <!--<p style="font-size:large">{body}</p>-->
+                        <p style="font-size:large">{body}</p>
+                        <!--<div>{@marked}{body}{/marked}</div>-->
                         <!--<div>{@markdown}{body}{/markdown}</div>-->
 
                     </td>

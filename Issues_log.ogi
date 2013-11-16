@@ -279,3 +279,259 @@ npm install marked --save
 
 prince http://localhost:3001/issues/Issues_joyent_node_2013-11-11_10_26_01.json -o joyent_node_marked.pdf
 13.11.2013 ogi
+
+changed from res.render to dust.stream (with compile and ...)
+
+but stil problems with marked;
+to be able to analyze:
+
+            //chunk.end(marked(string));
+            chunk.end(string);
+now looks like repated call of marked make problems...
+does res.write wich is a nodejs function really do that...
+
+
+14.11.2013 ogi
+
+COMMAND LINE alternatives to stdio js
+https://npmjs.org/package/optimist
+https://npmjs.org/package/commander   <---- try this first....
+
+but now back to the perf problem:
+
+good info:
+http://strongloop.com/strongblog/how-to-heap-snapshots/
+tried
+console.log(util.inspect(process.memoryUsage()));
+and it si not a memory issue... or???
+
+
+
+this could be used...
+app.use(express.compress());
+
+trying these node parameters (in command line)
+
+--max-old-space-size=3000 --trace-gc --trace-gc-verbose
+
+[89419]    10556 ms: Scavenge 237.2 (261.3) -> 228.2 (263.3) MB, 9.4 ms [Runtime::PerformGC].
+[89419] Memory allocator,   used: 269584 KB, available: 2867952 KB
+[89419] New space,          used:   3422 KB, available:  12961 KB, committed:  32768 KB
+[89419] Old pointers,       used:  52817 KB, available:      0 KB, committed:  52915 KB
+[89419] Old data space,     used:  76567 KB, available:      9 KB, committed:  76781 KB
+[89419] Code space,         used:   2886 KB, available:     84 KB, committed:   2988 KB
+[89419] Map space,          used:    381 KB, available:    753 KB, committed:   1135 KB
+[89419] Cell space,         used:     80 KB, available:      0 KB, committed:    128 KB
+[89419] PropertyCell space, used:     55 KB, available:      8 KB, committed:     64 KB
+[89419] Large object space, used:  97432 KB, available: 2866911 KB, committed:  97452 KB
+[89419] All spaces,         used: 233644 KB, available:  13818 KB, committed: 264231 KB
+[89419] External memory reported:     24 KB
+[89419] Total time spent in GC  : 317.6 ms
+[89419]    10644 ms: Scavenge 240.6 (263.3) -> 231.5 (267.3) MB, 9.5 ms [Runtime::PerformGC].
+[89419] Memory allocator,   used: 273680 KB, available: 2863856 KB
+[89419] New space,          used:   3426 KB, available:  12957 KB, committed:  32768 KB
+[89419] Old pointers,       used:  54506 KB, available:      0 KB, committed:  54930 KB
+[89419] Old data space,     used:  78292 KB, available:      5 KB, committed:  78796 KB
+[89419] Code space,         used:   2888 KB, available:     84 KB, committed:   2988 KB
+[89419] Map space,          used:    3{ rss: 355901440, heapTotal: 274701056, heapUsed: 245174640 }
+{ rss: 355909632, heapTotal: 274701056, heapUsed: 253829768 }
+{ rss: 359481344, heapTotal: 278828800, heapUsed: 253126216 }
+{ rss: 362897408, heapTotal: 280892672, heapUsed: 251783624 }
+{ rss: 362905600, heapTotal: 280892672, heapUsed: 260434096 }
+{ rss: 366460928, heapTotal: 286040320, heapUsed: 259240448 }
+{ rss: 370847744, heapTotal: 290168064, heapUsed: 262788816 }
+{ rss: 375062528, heapTotal: 294295808, heapUsed: 262114304 }
+{ rss: 375132160, heapTotal: 294295808, heapUsed: 274259360 }
+{ rss: 379105280, heapTotal: 298423552, heapUsed: 273702240 }
+{ rss: 383283200, heapTotal: 302551296, heapUsed: 272636168 }
+{ rss: 383414272, heapTotal: 302551296, heapUsed: 282550296 }
+{ rss: 386994176, heapTotal: 306679040, heapUsed: 281772312 }
+
+
+--max-old-space-size=9000 --trace-gc --trace-gc-verbose
+
+[89369] Total time spent in GC  : 285.5 ms
+[89369]     9013 ms: Scavenge 247.2 (271.3) -> 238.0 (274.3) MB, 6.3 ms [Runtime::PerformGC].
+[89369] Memory allocator,   used: 280848 KB, available: 9000688 KB
+[89369] New space,          used:   3379 KB, available:  13004 KB, committed:  32768 KB
+[89369] Old pointers,       used:  55638 KB, available:      0 KB, committed:  55938 KB
+[89369] Old data space,     used:  83961 KB, available:     96 KB, committed:  84843 KB
+[89369] Code space,         used:   2768 KB, available:     80 KB, committed:   2988 KB
+[89369] Map space,          used: { rss: 348868608, heapTotal: 281924608, heapUsed: 253066472 }
+{ rss: 348868608, heapTotal: 281924608, heapUsed: 261398984 }
+{ rss: 352382976, heapTotal: 285020416, heapUsed: 260208656 }
+{ rss: 355823616, heapTotal: 288116224, heapUsed: 259342656 }
+{ rss: 360312832, heapTotal: 293275904, heapUsed: 263017480 }
+{ rss: 360329216, heapTotal: 293275904, heapUsed: 271444296 }
+{ rss: 364630016, heapTotal: 297403648, heapUsed: 275145432 }
+{ rss: 368574464, heapTotal: 301531392, heapUsed: 274373408 }
+{ rss: 372568064, heapTotal: 304627200, heapUsed: 273207640 }
+{ rss: 372776960, heapTotal: 304627200, heapUsed: 283113952 }
+{ rss: 376205312, heapTotal: 308754944, heapUsed: 282089520 }
+
+
+OK looks like not a memory issue since we where able to give it more memory with: --max-old-space-size=9000
+see --->   [89369] Memory allocator,   used: 280848 KB, available: 9000688 KB
+
+
+http://code.osnap.us/wp/
+
+we learn that:
+
+Out of memory errors?  Don’t solve memory leaks – drown them in sweet tasty memory nectar.
+
+--max_new_space_size  (in kBytes)
+Control the size of the new generation.  Every app is different, but if you have large volumes of transient objects, you’ll want to make sure that this is large enough that they aren’t being needlessly promoted to the old generation.  Note that unlike the other size flags, this is in KB, so go crazy.
+
+--max_old_space_size (in Mbytes)
+Control the size of the old generation.  This is the nursing home of the memory model, so size accordingly.
+
+--max_executable_size (in Mbytes)
+The code space size.
+
+even this
+--max_executable_size=9000 --max-new-space-size=9000000  --max-old-space-size=9000 --trace-gc --trace-gc-verbose
+doesn't change anything...
+
+
+some more info:
+Controlling when GCs occur in V8
+
+By default, V8 will perform garbage collections on failed allocations, after every N allocations, and on a notification of idle condition by its embedder.  You can also optionally configure Node.js to allow manual invocation of the garbage collector.  Here are the relevant knobs:
+
+--gc_global
+This controls whether V8 will do automatic garbage collection after every gc_interval allocations.
+
+--gc_interval
+The frequency of which V8 will perform its automatic garbage collection, in number of allocations.
+
+–-nouse-idle-notification
+V8 allows the embedder (Node.js is my case) to send idle notifications, and those in turn trigger garbage collections.  When these occur are dependent on Node.js and the algorithm it has in place for sending notifications.  Many node users have turned this off, as the GCs can become frequent and disruptive when the heap is over 128MB.  Future iterations of nodejs plan to update and improve this (https://github.com/joyent/node/issues/3870) but for now, if you are having problems with frequent and/or pointless GCs, I recommend disabling this option.
+
+--expose-gc
+This option will allow you to call the gc() function within your javascript and trigger a manual garbage collection. This is an expensive garbage collection and will stop your world.  Use with caution, or better yet, don’t use.
+
+Tracing, and monitoring
+
+The VM provides multiple options to allow for logging garbage collection events and statistics.  The most basic of these is:
+
+--trace_gc
+This will cause standard out messages to be written on every garbage collection event.  Here is an example of the output:
+
+ 1826068 ms: Mark-sweep 13.8 (52.1) -> 13.6 (52.1) MB, 24 ms [idle notification ...
+ 1909752 ms: Scavenge 14.9 (52.1) -> 14.1 (52.1) MB, 1 ms [Runtime::PerformGC].
+ 1982853 ms: Scavenge 15.0 (52.1) -> 14.4 (52.1) MB, 1 ms [allocation failure].
+The first field is when the GC occurred in milliseconds since the process started.  The second is the type of collection – Scavenge or Mark Sweep.   This is followed by the before and after memory usage status, the time the GC took to execute, and the trigger of the GC.  In the example above, the Mark-sweep was triggered by an idle notification, the first scavenge by an automatic GC, and the second by an allocation failure.
+
+--trace_gc_verbose
+This option can be combined with trace_gc, and to provide a breakdown of memory allocation by each of the defined memory spaces.
+
+Memory allocator,   used: 37732352, available: 1497382912
+New space,          used:        0, available:  1048576
+Old pointers,       used:  1546168, available:    10056, waste:   0
+Old data space,     used:  1228544, available:        0, waste:   0
+Code space,         used:   625184, available:   394720, waste:   0
+Map space,          used:    75712, available:    55360, waste:   0
+Cell space,         used:    27440, available:    70864, waste:   0
+Large object space, used:        0, available: 1496317696
+There are a variety of other flavors of information you can print.  Use these options:
+
+  --trace_gc_nvp (print one detailed trace line in name=value forma)
+  --print_cumulative_gc_stat (print cumulative GC statistics on exit)
+  --trace_fragmentation (report fragmentation for old pointer / data)
+  --trace_incremental_marking (trace progress of incremental marking)
+  --log_gc (Log heap samples on garbage collection for the hp2ps tool)
+Only If You DareTuning
+
+V8 provides several other options, but they are for those with an advanced, intimate understanding of V8 and garbage collection.  Thanks to Vyacheslav Egorov, V8 garbage collection guru, for helping to provide most of this information.
+
+--incremental_marking (default: true)
+If you’d like to turn of incremental mark and sweep in favor of a stop the world collection, you can do that here.
+
+--incremental_marking_steps (default:true)
+This was added during the development of incremental marking, and served as a tool for validating that feature of the garbage collector.  It has no practical purpose for V8 users today.
+
+--always_compact (default: false)
+Always compact after an old generation collection.  This might be useful in unusual cases where constant memory fragmentation is an issue.
+
+--never_compact
+Never perform compaction after a full GC.  This is another option that exists for testing purposes only.
+
+--compact_code_space (default: true)
+Compact code space on full non-incremental collections.
+
+--flush_code (default: true)
+When this option is on, garbage collection will try to discard compiled code to reduce memory consumption. If the discarded code is needed in the future, it is recompiled. Currently, only non-optimized code is flushed during this process, but V8 may flush generated optimized code in the future as well.
+
+--collect_maps  (default: true)
+Here is a quote from Vyacheslav Egorov that explains this better than I ever could:
+
+The collect_maps option implies that maps are not collected when it is turned off; however this is not true.  Maps just start to die in a different way. When collect_maps is on then edges in map transition trees are reversed during garbage collection and trees start dying from their leaves: paths that do not lead to any live objects are cleared from the tree,
+but roots are retained. When collect_maps is off transition trees are just dying from their roots like a normal trees… It’s likely that less maps will die this way due to connection between initial map and the constructor, but fully dead trees will be surely reclaimed. In some cases application can exhibit pathological patterns of hidden classes construction that cause performance degradation due to frequent GCs when –collect_maps is enabled because parts in transition tree reappear again and again after being pruned as dead. But I would not recommend to touch this flag unless you deeply understand how V8′s hidden classes work.
+
+--lazy_sweeping (default: true)
+Use lazy sweeping for old pointer and data spaces.
+
+--cleanup_code_caches_at_gc (default: true)
+This option clears inline caches and other supplemental caches used by V8 to collect type feedback and adapt for the application. Flushing them reduces memory pressure (caches use small complied code stubs that can reference other objects e.g. hidden classes that are no longer ”relevant”) and ensures that feedback is not stale.
+
+
+
+BUT
+--max_executable_size=16000 --max-new-space-size=9000000  --max-old-space-size=9000 --trace-gc
+now we have more than enough memory but it still fails after 31000 so we have to find out what happens...
+
+OK lets try showdown
+!!! yes this works !!! and it shows errors....
+with these options:
+max-new-space-size=9000000  --max-old-space-size=9000 --trace-gc
+
+THIS could be the potential error with marked...
+
+=======================================
+17000
+{ rss: 403845120, heapTotal: 321628672, heapUsed: 295591064 }
+STRING
+I have also encountered this problem on 0.10.2. Cannot reliably reproduce it, but I have added debugging try/catch around state.buffer.forEach, so maybe some context could help:
+
+this._writableState.buffer looks like this:
+
+&lt;pre&gt;
+  _writableState:
+   {
+//... cut
+     buffer:
+      [ { chunk: &lt;Buffer 81 7e 9e c4 35 3a 3a 3a 7b 22 6e 61 6d 65 22 3a 22 63 68 61 72 74 48 69 73 74 6f 72 79 22 2c 22 61 72 67 73 22 3a 5b 22 75 70 64 61 74 65 22 2c 5b 5b 5b ...&gt;,
+          encoding: &#39;binary&#39;,
+          callback:
+           { [Function]
+             [length]: 0,
+             [name]: &#39;&#39;,
+             [arguments]: null,
+             [caller]: null,
+             [prototype]: { [constructor]: [Circular] } } },
+        [length]: 1 ]
+// cut...
+&lt;/pre&gt;
+
+so forEach el is { chunk: ... } and el = el[0] is undefined which triggers error in  Buffer.byteLength(el[0], el[1]);
+
+I can send full dump if needed.
+STR
+undefined
+MARKDOWN ERROR START:TypeError: Object function Object() { [native code] } has no method 'replace'MARKDOWN ERROR END.
+18000
+=======================================
+
+lets let both markdown interpreters inside with different tags
+marked -> marked
+markdown -> showdown
+
+OK got the damn error !!!!!
+Problem flushing buffer to kernel: result: false
+
+OK the pump pattern:
+http://elegantcode.com/2011/04/06/taking-baby-steps-with-node-js-pumping-data-between-streams/
+
+
+15.11.2013 ogi

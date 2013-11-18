@@ -54,6 +54,8 @@ marked.setOptions({
     langPrefix: 'lang-'
 });
 
+var ent = require('ent');
+
 dust.helpers.marked = function (chunk, context, bodies, params) {
     if (bodies.block) {
         return chunk.capture(bodies.block, context, function (string, t_chunk) {   //TODO check why we have here a chunk.capture
@@ -84,7 +86,7 @@ dust.helpers.marked = function (chunk, context, bodies, params) {
 
 
 
-                var tokens=marked.Lexer.lex(string, marked.options);
+                var tokens=marked.Lexer.lex(ent.decode(string), marked.options); //ew have to html decode string !!!
                 //console.log('p');
                 tokens.forEach(function( token ) {
                     if ( token.type === "code" ) {
@@ -101,7 +103,7 @@ dust.helpers.marked = function (chunk, context, bodies, params) {
                 //console.log(str);
 
             } catch (err) {
-                str = "MARKED ERROR START:" + err + "MARKED ERROR END."
+                str = "MARKED ERROR START: " + err + " MARKED ERROR END."
                 console.log(str);
                 t_chunk.end(str);
             }
@@ -125,7 +127,7 @@ dust.helpers.marked = function (chunk, context, bodies, params) {
 
 var Showdown = require('showdown');
 var converter = new Showdown.converter({ extensions: ['github', 'prettify', 'table'] });
-dust.helpers.markdown = function (chunk, context, bodies, params) {
+dust.helpers.showdown = function (chunk, context, bodies, params) {
     if (bodies.block) {
         return chunk.capture(bodies.block, context, function (string, chunk) {
             //console.log('.');
@@ -134,7 +136,7 @@ dust.helpers.markdown = function (chunk, context, bodies, params) {
                 //console.log("STRING");
                 //console.log(string);
 
-                str = converter.makeHtml(string);
+                str = converter.makeHtml(ent.decode(string));
                 chunk.end(str);
                 //console.log("STR");
                 //console.log(str);
@@ -144,7 +146,65 @@ dust.helpers.markdown = function (chunk, context, bodies, params) {
 //                console.log("STR");
 //                console.log(str);
 
-                str = "MARKDOWN ERROR START:" + err + "MARKDOWN ERROR END."
+                str = "SHOWDOWN ERROR START: " + err + " SHOWDOWN ERROR END."
+                console.log(str);
+                chunk.end(str);
+            }
+        });
+    }
+    return chunk;
+};
+
+var Markdown = require('markdown').markdown;
+dust.helpers.markdown = function (chunk, context, bodies, params) {
+    if (bodies.block) {
+        return chunk.capture(bodies.block, context, function (string, chunk) {
+            //console.log('.');
+            var str;
+            try {
+//                console.log("STRING");
+//                console.log(string);
+
+                str = Markdown.toHTML(ent.decode(string));
+                chunk.end(str);
+//                console.log("STR");
+//                console.log(str);
+            } catch (err) {
+//                console.log("STRING");
+//                console.log(string);
+//                console.log("STR");
+//                console.log(str);
+
+                str = "MARKDOWN ERROR START: " + err + " MARKDOWN ERROR END."
+                console.log(str);
+                chunk.end(str);
+            }
+        });
+    }
+    return chunk;
+};
+
+var Ghm = require('ghm');
+dust.helpers.ghm = function (chunk, context, bodies, params) {
+    if (bodies.block) {
+        return chunk.capture(bodies.block, context, function (string, chunk) {
+            //console.log('.');
+            var str;
+            try {
+//                console.log("STRING");
+//                console.log(string);
+
+                str = Ghm.parse(ent.decode(string));
+                chunk.end(str);
+//                console.log("STR");
+//                console.log(str);
+            } catch (err) {
+//                console.log("STRING");
+//                console.log(string);
+//                console.log("STR");
+//                console.log(str);
+
+                str = "GHM ERROR START: " + err + " GHM ERROR END."
                 console.log(str);
                 chunk.end(str);
             }

@@ -96,7 +96,7 @@
             </p>
         </td>
         <td>
-            <div>{@marked}{body}{/marked}</div>
+            <div>{@showdown}{body}{/showdown}</div>
 
 
             <table>
@@ -114,7 +114,7 @@
                         </p>
                     </td>
                     <td>
-                        <div>{@marked}{body}{/marked}</div>
+                        <div>{@showdown}{body}{/showdown}</div>
 
                     </td>
                 </tr>

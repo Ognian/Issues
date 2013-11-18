@@ -553,3 +553,32 @@ OK I found the string causing an endless loop in the browser...
 marked produces acurater results for gfm (github flavoured markdown...) so lets leave this inside...
 
 15.11.2013 ogi
+
+lets sum up:
+tried the following 3 markdown converters:
+
+marked       -> endless loop on failing , but the best output if ok altough still problems inside...
+showdown     --> the only one without endless loop, but still not perfect output...
+markdown-js  -> endless loop somewhere else
+
+Interesting:
+there is a api to render from github...
+http://developer.github.com/v3/markdown/
+
+and
+https://github.com/ypocat/gfms
+who had the same problems like me...
+actually he uses:
+github-flavored-markdown
+maybee we should use this:https://github.com/thomblake/github-flavored-markdown
+https://npmjs.org/package/ghm
+
+ghm --> no endless loop!!
+
+
+
+using this for decoding html entities:
+https://github.com/substack/node-ent
+npm install ent --save
+
+18.11.2013 ogi

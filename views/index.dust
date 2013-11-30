@@ -13,6 +13,6 @@
     {/files}
     </ul>
 
-  <p>Choose a .json file from the above to display or refresh page...</p>
+  <p>Choose a .json file from the above to display or <a href="./getIssues">create one</a> or refresh page...</p>
   </body>
 </html>

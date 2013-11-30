@@ -1,16 +1,35 @@
 
-# node.js module for downloading all github issues of a public or private repository to a file (json).
-
+# app and utility for downloading all github issues of a public or private repository to a file (json).
+There are 2 way's to use this utility:
+1. start the web app via
 
 ```
-USAGE: node getGHIssues.js [OPTIONS] , where OPTIONS are:
-  -a, --authUser <ARG1> <ARG2>  authenticate as user with password (eg. -a user1 pwd1) (mandatory)
-  -r, --repo <ARG1> <ARG2>      repository in the form username repository name (eg. -a user1 repo2) (mandatory)
-  -o, --outputPath <ARG1>       output Path (default ./data)
+node app.js
 ```
 
-### Uses:
+and go to http://localhost:3001
+2. use the command line utility ghIssues.js
 
-- https://github.com/mikedeboer/node-github
-- https://github.com/sgmonda/stdio
+```
+ ./ghIssues.js
+
+    Usage: ghIssues.js [options] [command]
+
+    Commands:
+
+      save <user> <password> <repoUser> <repo> ... authenticate at github as user <user> <password> and get all issues and comments from the repository <repoUser>/<repo>.
+                                                   They are saved as: Issues_<repoUser>_<repo>_YYYY_MM_DD_HH24_MI_SS.json, where YYYY_MM_DD_HH24_MI_SS is the current timestamp.
+
+    Options:
+
+      -h, --help               output usage information
+      -V, --version            output the version number
+      -o, --outputPath [path]  output Path default: ./data
+
+```
+
+It can be used to download the issues in a file via GUI and to display the downloaded issues as html.
+
+The resulting html can also be saved as a pdf, but until paged media support is added to the major browsers you can use command line tools like e.g. [prince](http://www.princexml.com).
+
 

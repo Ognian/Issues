@@ -32,4 +32,6 @@ It can be used to download the issues in a file via GUI and to display the downl
 
 The resulting html can also be saved as a pdf, but until paged media support is added to the major browsers you can use command line tools like e.g. [prince](http://www.princexml.com).
 
+All timestamps are UTC.
+The github api has limits on how many request per hour can be made, even if you authenticate first. So after approx. 2000 Issues maybe the limit will be reached. For more info see the help for the github api. v3. on github.
 

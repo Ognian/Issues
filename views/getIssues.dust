@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{title}</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+<h1>Get Issues</h1>
+<form action="./getIssues" method="post">
+    User: <input type="text" name="usr"><br>
+    Password: <input type="password" name="pass"><br>
+    Repository User: <input type="text" name="repoUsr"><br>
+    Repository: <input type="text" name="repo"><br>
+    <input type="submit" value="Initiate 'Get Issues'">
+</form>
+
+</body>
+</html>

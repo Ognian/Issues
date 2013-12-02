@@ -12,6 +12,7 @@
 var express = require('express');
 var routes = require('./routes');
 var issues = require('./routes/issues');
+var getIssues = require('./routes/getIssues');
 var http = require('http');
 var path = require('path');
 
@@ -244,6 +245,8 @@ app.disable('x-powered-by'); //get rid of the x-powerd-by = express header...
 
 app.get('/', routes.index);
 app.get('/issues/:filename', issues.report);
+app.get('/getIssues', getIssues.getIssues);
+app.post('/getIssues', getIssues.getIssuesDo);
 
 http.createServer(app).listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));

@@ -33,7 +33,8 @@ dust.helpers.formatDate = function (chunk, context, bodies, params) {
     date = timestamp.getDate();
     year = timestamp.getFullYear();
 
-    return chunk.write(date + '.' + month + '.' + year); //TODO why do we have here write and not end ?????
+    //return chunk.write(date + '.' + month + '.' + year+ " "+timestamp.getHours()+":"+timestamp.getMinutes()+":"+timestamp.getSeconds()); //TODO why do we have here write and not end ?????
+    return chunk.write(date + '.' + month + '.' + year ); //TODO why do we have here write and not end ?????
 };
 
 
@@ -51,8 +52,8 @@ marked.setOptions({
     pedantic: false,
     sanitize: true,
     smartLists: true,
-    smartypants: false,
-    langPrefix: 'lang-'
+    smartypants: false //,
+    //langPrefix: 'lang-'
 });
 
 var ent = require('ent');

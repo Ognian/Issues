@@ -6,3 +6,29 @@ body {
 a {
   color: #00B7FF;
 }
+
+.issueCol1{
+    vertical-align: top;
+}
+
+* {
+    overflow: visible !important; // forces a built-in PDF rendering gotcha in WebKit so that images never span 2 pages
+}
+
+img {
+    margin-top:20px;
+    max-width: 92%; // images will never overflow off the right hand side of a page
+}
+.page-break {
+    display: block;
+    page-break-before: always; // force a page break
+}
+
+body {
+    -webkit-print-color-adjust: exact;
+}
+
+/*maybe:*/
+    /*@media print {*/
+    /*body:before { content: url(img/printlogo.png);}*/
+/*}*/

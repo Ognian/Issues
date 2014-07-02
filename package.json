@@ -21,6 +21,7 @@
     "markdown": "~0.5.0",
     "ghm": "~1.0.0-5",
     "ent": "~0.1.0",
-    "commander": "~2.1.0"
+    "commander": "~2.1.0",
+    "dateformat": "1.0.8-1.2.3"
   }
 }

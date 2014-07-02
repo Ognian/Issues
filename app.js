@@ -18,23 +18,15 @@ var path = require('path');
 
 var dust_h = require('dustjs-helpers'); //this is needed!! there is a try load in consolidate...
 var dust = require('dustjs-linkedin');
+var dateFormat = require('dateformat');
 
-
-// add my format helper usage: <p>Today: {@formatDate value="{today}"/}</p>
+// add my format helper usage: <p>Today: {@formatDate value="{today}" format="dddd, mmmm dS, yyyy, h:MM:ss TT" /}</p>
 dust.helpers.formatDate = function (chunk, context, bodies, params) {
     var value = dust.helpers.tap(params.value, chunk, context),
-        timestamp,
-        month,
-        date,
-        year;
-//TODO add a better date formating (something like )
+        format = dust.helpers.tap(params.format, chunk, context),
+        timestamp;
     timestamp = new Date(value);
-    month = timestamp.getMonth() + 1;
-    date = timestamp.getDate();
-    year = timestamp.getFullYear();
-
-    //return chunk.write(date + '.' + month + '.' + year+ " "+timestamp.getHours()+":"+timestamp.getMinutes()+":"+timestamp.getSeconds()); //TODO why do we have here write and not end ?????
-    return chunk.write(date + '.' + month + '.' + year ); //TODO why do we have here write and not end ?????
+    return chunk.write(dateFormat(timestamp, format));
 };
 
 
@@ -61,67 +53,19 @@ var ent = require('ent');
 dust.helpers.marked = function (chunk, context, bodies, params) {
     if (bodies.block) {
         return chunk.capture(bodies.block, context, function (string, t_chunk) {   //TODO check why we have here a chunk.capture
-            //console.log('.');
-
-// var. 1 sync
             var str;
             try {
-                //console.log("STRING");
-                //console.log(string);
-                //str = marked(string);
-                //console.log('l');
+                var theString =ent.decode(string)
+                //console.log ("the marked string to decode: %s",theString);
+                str = marked(theString);
 
-//                // Let marked do its normal token generation.
-//                tokens = marked.lexer( content );
-//
-//// Mark all code blocks as already being escaped.
-//// This prevents the parser from encoding anything inside code blocks
-//                tokens.forEach(function( token ) {
-//                    if ( token.type === "code" ) {
-//                        token.escaped = true;
-//                    }
-//                });
-//
-//// Let marked do its normal parsing, but without encoding the code blocks
-//                parsed = marked.parser( tokens );
-//
-
-
-
-                var tokens=marked.Lexer.lex(ent.decode(string), marked.options); //ew have to html decode string !!!
-                //console.log('p');
-                tokens.forEach(function( token ) {
-                    if ( token.type === "code" ) {
-                        token.escaped = true;
-                    }
-
-                });
-
-                //console.log("TOK->"+JSON.stringify(tokens)); //this works great to find failing marked parser infinite loop!!!!
-                str = marked.Parser.parse(tokens, marked.options); //this one goes into an endless loop....!!!
-
-                t_chunk.end(str);
-                //console.log("STR");
-                //console.log(str);
+                t_chunk.end("<span class='marked'>"+str+"</span>");
 
             } catch (err) {
                 str = "MARKED ERROR START: " + err + " MARKED ERROR END."
                 console.log(str);
                 t_chunk.end(str);
             }
-
-// var. 2 async
-//                marked(string, function (err, content) {
-//                    if (err) {
-//                    console.log("marked async ERROR: "+err);
-//                    }
-////                    console.log("CONTEND");
-////                    console.log(content);
-//                    //jgfsdlgflas //errors here are ignored!!!! thats the problem !!!!
-//                    t_chunk.end(content);
-//                });
-
-
         });
     }
     return chunk;

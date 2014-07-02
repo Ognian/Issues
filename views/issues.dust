@@ -50,16 +50,33 @@
     }
 
     /* media independent css*/
+    td {
+        vertical-align: top;
+    }
+
     .issueCol1 {
-        width: 15em;
+        width: 17em;
+
     }
 
     .commentCol1 {
-        width: 15em;
+        width: 17em;
+        vertical-align: top;
     }
 
     .infodata {
 
+    }
+
+    .marked table{
+        /*border:1px solid black;*/
+        border-collapse: collapse;
+    }
+    .marked th{
+        border:1px dotted black;
+    }
+    .marked td{
+        border:1px dotted black;
     }
 
 </style>
@@ -71,59 +88,71 @@
 </head>
 <body>
 <h1>Issues in {name}</h1>
-<p> Issues are ordered by state. First come open issues than closed.</p>
+
+<p> Issues are ordered only by state. All open issues come before closed one.</p>
 <!--dust is evalueted even in comments !!!!!-->
 
-{#allDocs}
-<!-- for more helpers see http://linkedin.github.io/dustjs/test/test.html?q=helpers and select a template-->
-<!--<h2>{title} (id:{id} json file line: {@idx}{.} {@math key="{$idx}" method="add" operand="1"/}{/idx} of total in file: {@size key=allDocs}{body}{/size} )</h2>-->
-<!--one based counting-->
-<h2>#{number} {title}</h2>
-<div style="font-size: smaller"> (item {@math key="{$idx}" method="add" operand="1"/} of {@size key=allDocs}{body}{/size} id:{id} )</div>
-<!--never ever brake previous line into two lines...-->
+    {#allDocs}
+    <!-- for more helpers see http://linkedin.github.io/dustjs/test/test.html?q=helpers and select a template-->
+    <!--<h2>{title} (id:{id} json file line: {@idx}{.} {@math key="{$idx}" method="add" operand="1"/}{/idx} of total in file: {@size key=allDocs}{body}{/size} )</h2>-->
+    <!--one based counting-->
+    <h2>#{number} {title}</h2>
+
+<span style="font-size: smaller">
+    (item {@math key="{$idx}" method="add" operand="1"/} of {@size key=allDocs}{body}{/size} id:{id} )
+    <!--never ever brake previous line into two lines...-->
+</span>
 
 
-<table>
-    <tr>
-        <td class="issueCol1" >
-            <!--<img src={user.avatar_url} style="width:60px;height: 60px"><br>-->
-            <p class="infodata" >
-                <b>{user.login}</b><br>
-                state: <b>{state}</b><br>
-                created: <b>{@formatDate value="{created_at}"/}</b><br>
-                last: <b>{@formatDate value="{updated_at}"/}</b>
-                {#closed_at}<br>closed: <b>{@formatDate value="{closed_at}"/}</b>{/closed_at}
-            </p>
-        </td>
-        <td>
-            <div>{@marked}{body}{/marked}</div>
+    <table>
+        <tr>
+            <td class="issueCol1">
+                <!--<img src={user.avatar_url} style="width:60px;height: 60px"><br>-->
+                <p class="infodata">
+                    <b>{user.login}</b><br>
+                    state: <b>{state}</b><br>
+                    <b>{@formatDate value="{created_at}" format="dd.mm.yyyy hh:MM:ss"/}</b>
+                    {?closed_at}
+                        <br>closed: <b>{@formatDate value="{closed_at}" format="dd.mm.yyyy hh:MM:ss"/}</b>
+                    {:else}
+                        <br>last: <b>{@formatDate value="{updated_at}" format="dd.mm.yyyy hh:MM:ss"/}</b>
+                    {/closed_at}
+                </p>
+            </td>
+            <td>
+                <div>{@marked}{body}{/marked}</div>
+            </td>
+        </tr>
+    </table>
 
 
-            <!--<div><i><b>Comments:</b></i></div>-->
-            <table>
-                {#ogi_allComments}
-                <tr>
+        {?ogi_allComments}
+        <div><i><b>Comments:</b></i></div>
+        {/ogi_allComments}
+    <table>
+        {#ogi_allComments}
+            <tr>
 
-                    <td class="commentCol1">
-                        <!--<img src={user.avatar_url} style="width:60px;height: 60px"><br>-->
-                        <p class="infodata">
-                            <b>{user.login}</b><br>
-                            created: <b>{@formatDate value="{created_at}" /}</b><br>
-                            updated: <b>{@formatDate value="{updated_at}"/}</b>
-                        </p>
-                    </td>
-                    <td>
-                        <div>{@marked}{body}{/marked}</div>
+                <td class="commentCol1">
+                    <!--<img src={user.avatar_url} style="width:60px;height: 60px"><br>-->
+                    <p class="infodata">
+                        <b>{user.login}</b><br>
+                        <b>{@formatDate value="{created_at}" format="dd.mm.yyyy hh:MM:ss"/}</b>
+                        {@if cond="{updated_at}  != {created_at}"}
+                            <br>
+                            updated: <b>{@formatDate value="{updated_at}" format="dd.mm.yyyy hh:MM:ss"/}</b>
+                        {/if}
+                    </p>
+                </td>
+                <td>
+                    <div>{@marked}{body}{/marked}</div>
 
-                    </td>
-                </tr>
-                {/ogi_allComments}
-            </table>
-        </td>
-    </tr>
-</table>
+                </td>
+            </tr>
+        {/ogi_allComments}
+    </table>
 
-{/allDocs}
+    {/allDocs}
 
 
 </body>

@@ -21,6 +21,7 @@ exports.report = function (req, res) {
 
     fs.readFileSync(filename).toString().split('\n').forEach(function (line) {
         //console.log(line);
+        // !!! We assume the whole JSON in one line !!! so we can't pretty print it.... TODO maybe change the json format to be an array and parse it as a whole into memory???
         if (line.length > 0) {
             hugeArray.push(JSON.parse(line));
         }

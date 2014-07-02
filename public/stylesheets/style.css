@@ -1,15 +1,12 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
 }
 
-.issueCol1{
-    vertical-align: top;
-}
 
 * {
     overflow: visible !important; // forces a built-in PDF rendering gotcha in WebKit so that images never span 2 pages

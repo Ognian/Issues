@@ -94,12 +94,11 @@
 
     {#allDocs}
     <!-- for more helpers see http://linkedin.github.io/dustjs/test/test.html?q=helpers and select a template-->
-    <!--<h2>{title} (id:{id} json file line: {@idx}{.} {@math key="{$idx}" method="add" operand="1"/}{/idx} of total in file: {@size key=allDocs}{body}{/size} )</h2>-->
     <!--one based counting-->
     <h2>#{number} {title}</h2>
 
 <span style="font-size: smaller">
-    (item {@idx}{.} {@math key="{$idx}" method="add" operand="1"/}{/idx} of {@size key=allDocs}{body}{/size} id:{id} )
+    (item  {@math key="{$idx}" method="add" operand="1"/} of {@size key=allDocs}{body}{/size} id:{id} )
     <!--never ever brake previous line into two lines...-->
 </span>
 

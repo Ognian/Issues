@@ -89,7 +89,7 @@
 <body>
 <h1>Issues in {name}</h1>
 
-<p> Issues are ordered only by state. All open issues come before closed one.</p>
+<p> Issues are not really ordered ...</p>
 <!--dust is evalueted even in comments !!!!!-->
 
     {#allDocs}
@@ -99,7 +99,7 @@
     <h2>#{number} {title}</h2>
 
 <span style="font-size: smaller">
-    (item {@math key="{$idx}" method="add" operand="1"/} of {@size key=allDocs}{body}{/size} id:{id} )
+    (item {@idx}{.} {@math key="{$idx}" method="add" operand="1"/}{/idx} of {@size key=allDocs}{body}{/size} id:{id} )
     <!--never ever brake previous line into two lines...-->
 </span>
 
@@ -138,7 +138,7 @@
                     <p class="infodata">
                         <b>{user.login}</b><br>
                         <b>{@formatDate value="{created_at}" format="dd.mm.yyyy hh:MM:ss"/}</b>
-                        {@if cond="{updated_at}  != {created_at}"}
+                        {@if cond="'{updated_at}'!='{created_at}'"}
                             <br>
                             updated: <b>{@formatDate value="{updated_at}" format="dd.mm.yyyy hh:MM:ss"/}</b>
                         {/if}

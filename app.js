@@ -18,6 +18,13 @@ var path = require('path');
 
 var dust_h = require('dustjs-helpers'); //this is needed!! there is a try load in consolidate...
 var dust = require('dustjs-linkedin');
+// dust.helpers = require('dustjs-helpers').helpers; //HACK
+// DO NOT UPGRADE DUST UNTIL  issue  https://github.com/linkedin/dustjs-helpers/issues/72 is resolved and consolidate is changed..
+// could be that consolidate will NEVER be updated since we ahve a new express version just leave it that way for now!!!!
+
+dust.isDebug = true;
+//dust.debugLevel = 'DEBUG';
+
 var dateFormat = require('dateformat');
 
 // add my format helper usage: <p>Today: {@formatDate value="{today}" format="dddd, mmmm dS, yyyy, h:MM:ss TT" /}</p>
@@ -76,94 +83,6 @@ dust.helpers.marked = function (chunk, context, bodies, params) {
                 str = "MARKED ERROR START: " + err + " MARKED ERROR END."
                 console.log(str);
                 t_chunk.end(str);
-            }
-        });
-    }
-    return chunk;
-};
-
-var Showdown = require('showdown');
-var converter = new Showdown.converter({ extensions: ['github', 'prettify', 'table'] });
-dust.helpers.showdown = function (chunk, context, bodies, params) {
-    if (bodies.block) {
-        return chunk.capture(bodies.block, context, function (string, chunk) {
-            //console.log('.');
-            var str;
-            try {
-                //console.log("STRING");
-                //console.log(string);
-
-                str = converter.makeHtml(ent.decode(string));
-                chunk.end(str);
-                //console.log("STR");
-                //console.log(str);
-            } catch (err) {
-//                console.log("STRING");
-//                console.log(string);
-//                console.log("STR");
-//                console.log(str);
-
-                str = "SHOWDOWN ERROR START: " + err + " SHOWDOWN ERROR END."
-                console.log(str);
-                chunk.end(str);
-            }
-        });
-    }
-    return chunk;
-};
-
-var Markdown = require('markdown').markdown;
-dust.helpers.markdown = function (chunk, context, bodies, params) {
-    if (bodies.block) {
-        return chunk.capture(bodies.block, context, function (string, chunk) {
-            //console.log('.');
-            var str;
-            try {
-//                console.log("STRING");
-//                console.log(string);
-
-                str = Markdown.toHTML(ent.decode(string));
-                chunk.end(str);
-//                console.log("STR");
-//                console.log(str);
-            } catch (err) {
-//                console.log("STRING");
-//                console.log(string);
-//                console.log("STR");
-//                console.log(str);
-
-                str = "MARKDOWN ERROR START: " + err + " MARKDOWN ERROR END."
-                console.log(str);
-                chunk.end(str);
-            }
-        });
-    }
-    return chunk;
-};
-
-var Ghm = require('ghm');
-dust.helpers.ghm = function (chunk, context, bodies, params) {
-    if (bodies.block) {
-        return chunk.capture(bodies.block, context, function (string, chunk) {
-            //console.log('.');
-            var str;
-            try {
-//                console.log("STRING");
-//                console.log(string);
-
-                str = Ghm.parse(ent.decode(string));
-                chunk.end(str);
-//                console.log("STR");
-//                console.log(str);
-            } catch (err) {
-//                console.log("STRING");
-//                console.log(string);
-//                console.log("STR");
-//                console.log(str);
-
-                str = "GHM ERROR START: " + err + " GHM ERROR END."
-                console.log(str);
-                chunk.end(str);
             }
         });
     }

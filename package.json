@@ -1,27 +1,29 @@
 {
-  "name": "getGHIssues",
-  "version": "0.0.2",
-  "private": false,
-  "author": {
-    "name": "Ognian Tschakalov",
-    "email": "ognian.tschakalov@ogi-it.com"
-  },
-  "scripts": {
-    "start": "node getGHIssues"
-  },
-  "dependencies": {
-    "github": "~0.1.12",
-    "stdio": "~0.1.2",
-    "express": "3.4.5",
-    "dustjs-linkedin": "~2.2.0",
-    "consolidate": "~0.10.0",
-    "dustjs-helpers": "~1.1.1",
-    "marked": "0.3.2",
-    "showdown": "~0.3.1",
-    "markdown": "~0.5.0",
-    "ghm": "~1.0.0-5",
-    "ent": "~0.1.0",
-    "commander": "~2.1.0",
-    "dateformat": "1.0.8-1.2.3"
-  }
+    "name": "getGHIssues",
+    "version": "0.0.3",
+    "private": false,
+    "author": {
+        "name": "Ognian Tschakalov",
+        "email": "ognian.tschakalov@ogi-it.com"
+    },
+    "scripts": {
+        "start": "node getGHIssues"
+    },
+    "dependencies": {
+        "github": "0.1.12",
+        "stdio": "0.1.2",
+
+        "express": "3.4.5",
+        "consolidate": "0.10.0",
+
+        "dustjs-linkedin": "2.2.0",
+        "dustjs-helpers": "1.1.0",
+        "dateformat": "1.0.8-1.2.3",
+
+        "marked": "0.3.2",
+        "ent": "0.1.0",
+
+        "commander": "2.1.0"
+
+    }
 }

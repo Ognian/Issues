@@ -31,21 +31,32 @@ dust.helpers.formatDate = function (chunk, context, bodies, params) {
 
 
 var marked = require('marked');
+var renderer = new marked.Renderer();
+
+var markedHeaderStartingLevel=3;
+
+renderer.heading = function (text, level) {
+    var escapedText = text.toLowerCase().replace(/[^\w]+/g, '-');
+
+    var newLevel=level+markedHeaderStartingLevel;
+    return '<h' + newLevel + '><a name="' +
+        escapedText +
+        '" class="anchor" href="#' +
+        escapedText +
+        '"><span class="header-link"></span></a>' +
+        text + '</h' + newLevel + '>';
+};
+
+// we could also do syntax highlighting see https://github.com/chjj/marked
 marked.setOptions({
     gfm: true,
-//    highlight: function (code, lang, callback) {
-//        pygmentize({ lang: lang, format: 'html' }, code, function (err, result) {
-//            if (err) return callback(err);
-//            callback(null, result.toString());
-//        });
-//    },
     tables: true,
     breaks: true,
     pedantic: false,
     sanitize: true,
     smartLists: true,
-    smartypants: false //,
-    //langPrefix: 'lang-'
+    smartypants: false ,
+    renderer: renderer
 });
 
 var ent = require('ent');

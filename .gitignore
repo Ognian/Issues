@@ -1,4 +1,5 @@
 # for Webstorm
+# do not remove .idea/workspace.xml !!! let it be ignored !!!
 .idea/workspace.xml
 .idea/tasks.xml
 

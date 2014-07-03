@@ -110,11 +110,11 @@
                 <p class="infodata">
                     <b>{user.login}</b><br>
                     state: <b>{state}</b><br>
-                    <b>{@formatDate value="{created_at}" format="dd.mm.yyyy hh:MM:ss"/}</b>
+                    <b>{@formatDate value="{created_at}" format="dd.mm.yyyy HH:MM:ss"/}</b>
                     {?closed_at}
-                        <br>closed: <b>{@formatDate value="{closed_at}" format="dd.mm.yyyy hh:MM:ss"/}</b>
+                        <br>closed: <b>{@formatDate value="{closed_at}" format="dd.mm.yyyy HH:MM:ss"/}</b>
                     {:else}
-                        <br>last: <b>{@formatDate value="{updated_at}" format="dd.mm.yyyy hh:MM:ss"/}</b>
+                        <br>last: <b>{@formatDate value="{updated_at}" format="dd.mm.yyyy HH:MM:ss"/}</b>
                     {/closed_at}
                 </p>
             </td>
@@ -136,10 +136,10 @@
                     <!--<img src={user.avatar_url} style="width:60px;height: 60px"><br>-->
                     <p class="infodata">
                         <b>{user.login}</b><br>
-                        <b>{@formatDate value="{created_at}" format="dd.mm.yyyy hh:MM:ss"/}</b>
+                        <b>{@formatDate value="{created_at}" format="dd.mm.yyyy HH:MM:ss"/}</b>
                         {@if cond="'{updated_at}'!='{created_at}'"}
                             <br>
-                            updated: <b>{@formatDate value="{updated_at}" format="dd.mm.yyyy hh:MM:ss"/}</b>
+                            updated: <b>{@formatDate value="{updated_at}" format="dd.mm.yyyy HH:MM:ss"/}</b>
                         {/if}
                     </p>
                 </td>

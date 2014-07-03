@@ -32,7 +32,8 @@ dust.helpers.formatDate = function (chunk, context, bodies, params) {
     var value = dust.helpers.tap(params.value, chunk, context),
         format = dust.helpers.tap(params.format, chunk, context),
         timestamp;
-    timestamp = new Date(value);
+    timestamp = new Date(value); // this converts correctly from UTC to the local timezone...
+    //console.log("value: "+value+" timestamp: "+timestamp);
     return chunk.write(dateFormat(timestamp, format));
 };
 

@@ -1,6 +1,6 @@
 {
     "name": "getGHIssues",
-    "version": "0.0.3",
+    "version": "0.1.0",
     "private": false,
     "author": {
         "name": "Ognian Tschakalov",
@@ -22,8 +22,6 @@
 
         "marked": "0.3.2",
         "ent": "0.1.0",
-
-        "commander": "2.1.0",
 
         "q": "1.0.1"
 

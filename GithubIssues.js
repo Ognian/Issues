@@ -54,8 +54,8 @@ GithubIssues.prototype = { //
                     user: usr,
                     state: type,
           //        labels: "",
-                    sort: "updated",
-          //        direction: "asc"
+                    sort: "created",
+                    direction: "desc",
                     per_page: 100 //change to 1 for testing paging
                 },
                 function (err, res) {
@@ -160,8 +160,10 @@ GithubIssues.prototype = { //
 
         var fd = fs.openSync(filename, "w");
         fs.closeSync(fd);
-        getGHIssues(issuesUser, issuesRepo, "open", filename);
-        getGHIssues(issuesUser, issuesRepo, "closed", filename);
+        getGHIssues(issuesUser, issuesRepo, undefined, filename);
+        //this is async so that's not the way to do it!!
+        //getGHIssues(issuesUser, issuesRepo, "open", filename);
+        //getGHIssues(issuesUser, issuesRepo, "closed", filename);
 
 
 // issues and comments are linked together:

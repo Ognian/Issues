@@ -10,7 +10,7 @@
         "start": "node getGHIssues"
     },
     "dependencies": {
-        "github": "0.1.12",
+        "github": "0.2.0",
         "stdio": "0.1.2",
 
         "express": "3.4.5",
@@ -23,7 +23,9 @@
         "marked": "0.3.2",
         "ent": "0.1.0",
 
-        "commander": "2.1.0"
+        "commander": "2.1.0",
+
+        "q": "1.0.1"
 
     }
 }

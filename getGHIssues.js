@@ -20,10 +20,12 @@ var options = stdio.getopt({
 
 if (!options.outputPath) {
     options.outputPath = "./data";
-};
-if(!fs.existsSync(options.outputPath)){
+}
+;
+if (!fs.existsSync(options.outputPath)) {
     fs.mkdirSync(options.outputPath);
-};
+}
+;
 
 //console.log(JSON.stringify(options, undefined, 2));
 
@@ -57,8 +59,8 @@ function getGHIssues(usr, rep, type, filename) {
             user: usr,
             state: type,
 //        labels: "",
-//        sort: "updated",
-//        direction: "asc"
+            sort: "created",
+            //direction: "desc",
             per_page: 100 //change to 1 for testing paging
         },
         function (err, res) {
@@ -72,6 +74,8 @@ function getGHIssues(usr, rep, type, filename) {
             function doWithIssues(issueArray) {
                 for (var i = 0; i < issueArray.length; i++) {
                     //console.log("an issue:" + JSON.stringify(issueArray[i], undefined, 2));
+                    console.log("number: %i",issueArray[i].number);
+                    //UNTIL HERE THE SORTING ORDER is OK
 
                     //get comments
                     github.issues.getComments(
@@ -111,6 +115,7 @@ function getGHIssues(usr, rep, type, filename) {
                                     // add collected comments
                                     iA1.ogi_allComments = allComments;
 
+                                    //BUT HERE WE ARE WRITING WHEN THE result arrives and therefore mixing up everything!!!
                                     var fd = fs.openSync(filename, "a");
                                     // we use the mongodb format: one json object per line with no "," !!
                                     // as an array it would be limited...
@@ -159,12 +164,14 @@ var filename = "Issues_" + issuesUser + "_" + issuesRepo + "_" + new Date().toIS
     replace(/\..+/, '').     // delete the dot and everything after;
     replace(/:/g, '_')      // replace : with an underscore g-> all
     + ".json";
-filename=path.join(options.outputPath, filename );
+filename = path.join(options.outputPath, filename);
 
 // time is UTC !! that is good!
 
 var fd = fs.openSync(filename, "w");
 fs.closeSync(fd);
+//getGHIssues(issuesUser, issuesRepo, undefined, filename); this returns only the open one...
+// don't do this that way; since here it is async!!!
 getGHIssues(issuesUser, issuesRepo, "open", filename);
 getGHIssues(issuesUser, issuesRepo, "closed", filename);
 

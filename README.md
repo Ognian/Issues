@@ -35,3 +35,4 @@ The resulting html can also be saved as a pdf, but until paged media support is 
 All timestamps are UTC.
 The github api has limits on how many request per hour can be made, even if you authenticate first. So after approx. 2000 Issues maybe the limit will be reached. For more info see the help for the github api. v3. on github.
 
+To be able to download the report as pdf you have to install wkhtmltopdf on your system.

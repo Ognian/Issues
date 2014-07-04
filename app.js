@@ -41,12 +41,12 @@ dust.helpers.formatDate = function (chunk, context, bodies, params) {
 var marked = require('marked');
 var renderer = new marked.Renderer();
 
-var markedHeaderStartingLevel=3;
+var markedHeaderStartingLevel = 3;
 
 renderer.heading = function (text, level) {
     var escapedText = text.toLowerCase().replace(/[^\w]+/g, '-');
 
-    var newLevel=level+markedHeaderStartingLevel;
+    var newLevel = level + markedHeaderStartingLevel;
     return '<h' + newLevel + '><a name="' +
         escapedText +
         '" class="anchor" href="#' +
@@ -63,7 +63,7 @@ marked.setOptions({
     pedantic: false,
     sanitize: true,
     smartLists: true,
-    smartypants: false ,
+    smartypants: false,
     renderer: renderer
 });
 
@@ -74,11 +74,11 @@ dust.helpers.marked = function (chunk, context, bodies, params) {
         return chunk.capture(bodies.block, context, function (string, t_chunk) {   //TODO check why we have here a chunk.capture
             var str;
             try {
-                var theString =ent.decode(string)
+                var theString = ent.decode(string)
                 //console.log ("the marked string to decode: %s",theString);
                 str = marked(theString);
 
-                t_chunk.end("<span class='marked'>"+str+"</span>");
+                t_chunk.end("<span class='marked'>" + str + "</span>");
 
             } catch (err) {
                 str = "MARKED ERROR START: " + err + " MARKED ERROR END."
@@ -123,6 +123,38 @@ app.get('/', routes.index);
 app.get('/issues/:filename', issues.report);
 app.get('/getIssues', getIssues.getIssues);
 app.post('/getIssues', getIssues.getIssuesDo);
+
+var wkhtml = require('./node-wkhtml.js');
+
+app.get('/pdf', function (req, res) {
+
+    console.log("link: %s", req.param("link"));
+    var source = 'http://localhost:3001/issues/' + req.param("link");
+    var line = [
+        '--outline-depth',
+        '2',
+        '--header-right',
+        '[title]',
+        '--footer-right',
+        'page [page] of [topage]',
+        'toc',
+        source
+    ];
+    console.log("line: %j", line);
+    var spwn = wkhtml
+        .spawn('pdf', line);
+        //this is for debug to show the error which is put on stdout...
+//        spwn.stdout.on('data', function (data) {
+//            console.log('>> ' + data);
+//        });
+    spwn.stdout.pipe(res);
+    // this shows the progress indicator in the log...
+    spwn.stderr.on('data', function (data) {
+        //console.log('>>>> ' + data);
+        console.log(data.toString());
+    });
+});
+
 
 http.createServer(app).listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));

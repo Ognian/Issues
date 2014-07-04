@@ -9,7 +9,7 @@
 
     <ul>
     {#files}
-    <li><a href="./issues/{.}">{.}</a></li>
+    <li><a href="./issues/{.}">{.}</a> as <a href="./pdf?link={.}">pdf</a></li>
     {/files}
     </ul>
 
